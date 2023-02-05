@@ -1,0 +1,28 @@
+{
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "files.associations": {
+        "*.fragment": "glsl",
+        "*.vertex": "glsl",
+        "*.fsh": "glsl",
+        "*.inc": "glsl",
+        "*.cspef": "glsl",
+        "*.material": "jsonc",
+        "*.json": "jsonc",
+        "*.ihlsl": "hlsl",
+        "*.cspev": "glsl",
+        "*.cspe": "glsl",
+        "*.usf": "hlsl",
+        "*.ush": "hlsl",
+        "*.gsh": "hlsl",
+        "*.brdf": "glsl",
+        "*.osl": "hlsl",
+        "*.lin": "hlsl",
+        "gsl": "cpp",
+        "gsl_algorithm": "cpp",
+        "*.dbx": "tex",
+        "*.uidx": "jsonc",
+        "*.sc": "shaderlab",
+        "*.msl": "metal",
+        "filesystem": "cpp"
+    }
+}

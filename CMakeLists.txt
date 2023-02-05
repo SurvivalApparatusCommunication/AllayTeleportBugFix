@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(plugin)
+project(AllayTeleportBugFix)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Release)
@@ -12,8 +12,11 @@ file(GLOB_RECURSE SRC_FILES_DIR
 )
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/SDK/include
+    ${PROJECT_SOURCE_DIR}/SDK/include/llapi/*.hpp
+    ${PROJECT_SOURCE_DIR}/SDK/include/llapi/*.h
 )
+include_directories(SDK/include/llapi)
+include_directories(SDK/include)
 
 link_directories(
     ${CMAKE_SOURCE_DIR}/SDK/lib
@@ -34,43 +37,27 @@ add_definitions(
 )
 
 add_compile_options(
-    /diagnostics:column
-    /EHsc
-    /FC
-    /GL
-    /MD
-    /nologo
-    /permissive-
-    /sdl
-    /utf-8
-    /Zc:inline
-    /Zi
+    /permissive- /GS /GL /W3 /Gy /Zc:wchar_t /Zi /Zf /Gm- /sdl /Zc:inline /fp:precise /errorReport:prompt /WX- /utf-8
+    /Zc:forScope /Gd /Oi /Ot /MD /std:c++20 /FC /EHsc /nologo /diagnostics:column
 )
 
 add_link_options(
-    /DEBUG
-    /DELAYLOAD:"bedrock_server.dll"
-    /DLL
-    /IGNORE:4199
-    /INCREMENTAL:NO
-    /LTCG:INCREMENTAL
-    /MANIFESTUAC:NO
-    /MACHINE:X64
-    /NOLOGO
-    /OPT:ICF
-    /OPT:REF
-    /SUBSYSTEM:CONSOLE
+    /MANIFEST /LTCG:incremental /NXCOMPAT /DEBUG /DLL /MACHINE:X64 /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:CONSOLE
+    /MANIFESTUAC:NO /OPT:ICF /ERRORREPORT:PROMPT /NOLOGO /DELAYLOAD:"bedrock_server.dll" /TLBID:1
 )
 
-add_library(plugin SHARED ${SRC_FILES_DIR})
+add_library(AllayTeleportBugFix SHARED ${SRC_FILES_DIR})
 
-target_link_libraries(plugin 
-	"${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib"
-	"${CMAKE_SOURCE_DIR}/SDK/lib/bedrock_server_api.lib"
-	"${CMAKE_SOURCE_DIR}/SDK/lib/bedrock_server_var.lib"
-	"${CMAKE_SOURCE_DIR}/SDK/lib/SymDBHelper.lib"
+target_link_libraries(AllayTeleportBugFix
+    "${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib"
+    "${CMAKE_SOURCE_DIR}/SDK/lib/bedrock_server_api.lib"
+    "${CMAKE_SOURCE_DIR}/SDK/lib/bedrock_server_var.lib"
+    "${CMAKE_SOURCE_DIR}/SDK/lib/SymDBHelper.lib"
 )
 
-add_custom_command(TARGET plugin PRE_BUILD
+add_custom_command(TARGET AllayTeleportBugFix PRE_BUILD
     COMMAND cmd /c ${PROJECT_SOURCE_DIR}/prepare_libraries.cmd ${PROJECT_SOURCE_DIR}
+)
+add_custom_command(TARGET AllayTeleportBugFix POST_BUILD
+    COMMAND cmd /c ${PROJECT_SOURCE_DIR}/runbds.bat ${PROJECT_SOURCE_DIR}
 )
